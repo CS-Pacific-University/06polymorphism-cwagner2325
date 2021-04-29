@@ -1,10 +1,10 @@
 //***************************************************************************
-// File name:	 
-// Author:		 
-// Date:		   
-// Class:		   
-// Assignment:  
-// Purpose:		 
+// File name:	  Parcel.h
+// Author:		  Cayden Wagner
+// Date:		    April 28 2021
+// Class:		    CS250
+// Assignment:  06Polymorphism
+// Purpose:		  A user defined parent class that represents a Parcel
 //***************************************************************************
 
 #pragma once

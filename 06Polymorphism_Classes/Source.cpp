@@ -1,11 +1,13 @@
 //***************************************************************************
-// File name:	 
-// Author:		 
-// Date:		   
-// Class:		   
-// Assignment:  
-// Purpose:		 
-// Hours: 
+// File name:	  Source.cpp
+// Author:		  Cayden Wagner
+// Date:		    April 28 2021
+// Class:		    CS250
+// Assignment:  06Polymorphism
+// Purpose:		  To create a mail delivery system that handles several types 
+//              of mail
+// Hours:       6
+// Computer OS: MacOS
 //***************************************************************************
 #include <iostream>
 #include <fstream>
@@ -20,7 +22,16 @@ using namespace std;
 void printMenu();
 bool openFileForRead(ifstream& inputFile, string fileName);
 void closeFileForRead(ifstream& inputFile);
-
+//***************************************************************************
+// Function:    main
+//
+// Description:	Provide functionality for the Parcel class and its sub
+//              classes Letter, Postcard, and Overnight
+//
+// Parameters:	none
+//
+// Returned:		exit status
+//***************************************************************************
 int main() {
   const int MAX_FILE_SIZE = 25;
   const string PRINT_ALL = "1", ADD_INSURANCE = "2", ADD_RUSH = "3";
@@ -34,6 +45,8 @@ int main() {
   string userChoice;
   ifstream inputFile;
 
+  bool readInCorrectly = true;
+
   cout << "Mail Simulator!" << endl << endl;
 
   if (!(openFileForRead(inputFile, INPUT_FILE))) {
@@ -41,80 +54,85 @@ int main() {
     return EXIT_FAILURE;
   }
   
-  while (!inputFile.eof()) {
+  while (!inputFile.eof() && readInCorrectly) {
     inputFile >> parcelIndex;
     if (parcelIndex == LETTER) {
       apcParcels[numParcels] = new Letter;
-      apcParcels[numParcels]->read(inputFile);
+      readInCorrectly = apcParcels[numParcels]->read(inputFile);
       numParcels++;
     }
     if (parcelIndex == POSTCARD) {
       apcParcels[numParcels] = new Postcard;
-      apcParcels[numParcels]->read(inputFile);
+      readInCorrectly = apcParcels[numParcels]->read(inputFile);
       numParcels++;
     }
     if (parcelIndex == OVERNIGHT) {
       apcParcels[numParcels] = new Overnight;
-      apcParcels[numParcels]->read(inputFile);
+      readInCorrectly = apcParcels[numParcels]->read(inputFile);
       numParcels++;
     }
   }
 
-  for (int i = 0; i < numParcels; i++) {
-    apcParcels[i]->setCost();
+  if (!readInCorrectly) {
+    cout << "The File is Invalid";
   }
+  else {
+    for (int i = 0; i < numParcels; i++) {
+      apcParcels[i]->setCost();
+    }
 
-  do {
-    printMenu();
-    cout << endl << "Choice> ";
-    cin >> userChoice;
-    cout << endl;
+    do {
+      printMenu();
+      cout << endl << "Choice> ";
+      cin >> userChoice;
+      cout << endl;
 
-    if (PRINT_ALL == userChoice) {
-      for (int i = 0; i < numParcels; i++) {
-        if (apcParcels[i] != nullptr) {
-          apcParcels[i]->print(cout);
-          cout << endl;
+      if (PRINT_ALL == userChoice) {
+        for (int i = 0; i < numParcels; i++) {
+          if (apcParcels[i] != nullptr) {
+            apcParcels[i]->print(cout);
+            cout << endl;
+          }
+        }
+        cout << endl;
+      }
+      else if (ADD_INSURANCE == userChoice) {
+        cout << "TID> ";
+        cin >> userParcelChoice;
+        if (userParcelChoice >= 0 && userParcelChoice <= numParcels) {
+          cout << "Added Insurance for $"
+            << fixed << setprecision(2)
+            << apcParcels[userParcelChoice - 1]->addInsurance() << endl;
+          apcParcels[userParcelChoice - 1]->print(cout);
+          cout << endl << endl;
         }
       }
-      cout << endl;
-    }
-    else if (ADD_INSURANCE == userChoice) {
-      cout << "TID> ";
-      cin >> userParcelChoice;
-      if (userParcelChoice >= 0 && userParcelChoice <= numParcels) {
-        cout << "Added Insurance for $"
-          << fixed << setprecision(2)
-          << apcParcels[userParcelChoice - 1]->addInsurance() << endl;
-        apcParcels[userParcelChoice - 1]->print(cout);
-        cout << endl << endl;
-      }
-    }
-    else if (ADD_RUSH == userChoice) {
-      cout << "TID> ";
-      cin >> userParcelChoice;
-      if (userParcelChoice >= 0 && userParcelChoice <= numParcels) {
-        cout << "Added Rush for $"
-          << fixed << setprecision(2)
-          << apcParcels[userParcelChoice - 1]->addRush() << endl;
-        apcParcels[userParcelChoice - 1]->print(cout);
-        cout << endl << endl;
-      }
-    }
-    else if (DELIVER == userChoice) {
-      cout << "TID> ";
-      if (userParcelChoice >= 0 && userParcelChoice <= numParcels) {
+      else if (ADD_RUSH == userChoice) {
+        cout << "TID> ";
         cin >> userParcelChoice;
-        cout << endl << "Delivered!" << endl
-          << apcParcels[userParcelChoice - 1]->getDeliveryDay() << " Day, $"
-          << apcParcels[userParcelChoice - 1]->getCost() << endl;
-        apcParcels[userParcelChoice - 1]->print(cout);
-        cout << endl << endl;
-        delete apcParcels[userParcelChoice - 1];
-        apcParcels[userParcelChoice - 1] = { nullptr };
+        if (userParcelChoice >= 0 && userParcelChoice <= numParcels) {
+          cout << "Added Rush for $"
+            << fixed << setprecision(2)
+            << apcParcels[userParcelChoice - 1]->addRush() << endl;
+          apcParcels[userParcelChoice - 1]->print(cout);
+          cout << endl << endl;
+        }
       }
-    }
-  } while (userChoice != QUIT);
+      else if (DELIVER == userChoice) {
+        cout << "TID> ";
+        if (userParcelChoice >= 0 && userParcelChoice <= numParcels) {
+          cin >> userParcelChoice;
+          cout << endl << "Delivered!" << endl
+            << apcParcels[userParcelChoice - 1]->getDeliveryDay() << " Day, $"
+            << apcParcels[userParcelChoice - 1]->getCost() << endl;
+          apcParcels[userParcelChoice - 1]->print(cout);
+          cout << endl << endl;
+          delete apcParcels[userParcelChoice - 1];
+          apcParcels[userParcelChoice - 1] = { nullptr };
+        }
+      }
+    } while (userChoice != QUIT);
+  }
   
   closeFileForRead(inputFile);
   delete *apcParcels;
@@ -149,11 +167,11 @@ void closeFileForRead(ifstream& inputFile) {
 	inputFile.close();
 }
 //***************************************************************************
-// Function:     
+// Function:     printMenu
 //
-// Description:  
+// Description:  Prints the user menu in the correct format
 //
-// Parameters:	 
+// Parameters:	 None
 //	
 // Returned:		 None
 //***************************************************************************

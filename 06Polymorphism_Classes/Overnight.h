@@ -1,10 +1,11 @@
 //***************************************************************************
-// File name:	 
-// Author:		 
-// Date:		   
-// Class:		   
-// Assignment:  
-// Purpose:		 
+// File name:	  Overnight.h
+// Author:		  Cayden Wagner
+// Date:		    April 28 2021
+// Class:		    CS250
+// Assignment:  06Polymorphism
+// Purpose:		  A user defined child class that represents an Overnight 
+//							package and inherits data from parent class Parcel
 //***************************************************************************
 
 #pragma once

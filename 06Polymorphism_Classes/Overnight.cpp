@@ -1,10 +1,10 @@
 //***************************************************************************
-// File name:	 
-// Author:		 
-// Date:		   
-// Class:		   
-// Assignment: 
-// Purpose:		 
+// File name:		Overnight.cpp
+// Author:			Cayden Wagner
+// Date:				April 28 2021
+// Class:				CS250
+// Assignment:	06Polymorphism
+// Purpose:			To define functionality for class Overnight
 //***************************************************************************
 
 #include "Parcel.h"
@@ -14,25 +14,24 @@
 #include <string>
 
 //***************************************************************************
-// Constructor:	
+// Constructor:		Overnight
 //
-// Description:
+// Description:		Sets member data to default values
 //
-// Parameters:	
-//
-// Returned:		
+// Parameters:		None
 //***************************************************************************
 Overnight::Overnight() : Parcel() {
 	mVolume = 0;
 }
 //***************************************************************************
-// Function:	
+// Function:			Read
 //
-// Description:
+// Description:		Calls read from the parent class Parcel, then reads in 
+//								unique data members from a stream
 //
-// Parameters:	
+// Parameters:		rcIn - determines from which stream the data is read
 //
-// Returned:		
+// Returned:			True if the data is read in, otherwise false
 //***************************************************************************
 bool Overnight::read(istream& rcIn) {
 	bool bIsRead = Parcel::read(rcIn);
@@ -45,26 +44,27 @@ bool Overnight::read(istream& rcIn) {
 	return bIsRead;
 }
 //***************************************************************************
-// Function:	
+// Function:			Print
 //
-// Description:
+// Description:		Calls print from the parent class Parcel, then prints 
+//								unique member data to a stream in the correct format
 //
-// Parameters:	
+// Parameters:		rcOut - determines to which stream the data is displayed
 //
-// Returned:		
+// Returned:			None
 //***************************************************************************
 void Overnight::print(ostream& rcOut) const {
 	Parcel::print(rcOut);
 	rcOut << "\t OVERNIGHT!";
 }
 //***************************************************************************
-// Function:	
+// Function:			setCost
 //
-// Description:
+// Description:		sets the cost variable to the base cost
 //
-// Parameters:	
+// Parameters:		none
 //
-// Returned:		
+// Returned:			none
 //***************************************************************************
 void Overnight::setCost() {
 	if (mVolume > VOLUME_CUTOFF) {
@@ -75,13 +75,14 @@ void Overnight::setCost() {
 	}
 }
 //***************************************************************************
-// Function:	
+// Function:			addInsurance
 //
-// Description:
+// Description:		Turns the object's insurance status to true, calculates the
+//								cost of insurance, and adds it to the total cost
 //
-// Parameters:	
+// Parameters:		None
 //
-// Returned:		
+// Returned:			The cost of adding insurance
 //***************************************************************************
 double Overnight::addInsurance() {
 	double insuranceCost = 0;
@@ -94,13 +95,14 @@ double Overnight::addInsurance() {
 }
 
 //***************************************************************************
-// Function:	
+// Function:			addRush
 //
-// Description:
+// Description:		Turns the object's rush status to true, calculates the
+//								cost of rush, and adds it to the total cost
 //
-// Parameters:	
+// Parameters:		None
 //
-// Returned:		
+// Returned:			The cost of adding rush
 //***************************************************************************
 double Overnight::addRush() {
 	double rushCost = 0;
@@ -112,13 +114,14 @@ double Overnight::addRush() {
 	return rushCost;
 }
 //***************************************************************************
-// Function:	
+// Function:			getDeliveryDay
 //
-// Description:
+// Description:		Calculates the delivery date based on how far away the 
+//								package is and its rush status
 //
-// Parameters:	
+// Parameters:		none
 //
-// Returned:		
+// Returned:			The number of days until delivery
 //***************************************************************************
 int Overnight::getDeliveryDay() {
 	int deliveryDay;

@@ -1,10 +1,10 @@
 //***************************************************************************
-// File name:	 
-// Author:		 
-// Date:		   
-// Class:		   
-// Assignment: 
-// Purpose:		 
+// File name:		Letter.cpp
+// Author:			Cayden Wagner
+// Date:				April 28 2021
+// Class:				CS250
+// Assignment:	06Polymorphism
+// Purpose:			To define functionality for class Letter
 //***************************************************************************
 
 #include "Parcel.h"
@@ -14,36 +14,35 @@
 #include <string>
 
 //***************************************************************************
-// Constructor:	
+// Constructor:		Letter
 //
-// Description:
+// Description:		Sets member data to default values
 //
-// Parameters:	
-//
-// Returned:		
+// Parameters:		None
 //***************************************************************************
 Letter::Letter() : Parcel() {
 }
 //***************************************************************************
-// Function:	
+// Function:			setCost
 //
-// Description:
+// Description:		sets the cost variable to the base cost
 //
-// Parameters:	
+// Parameters:		none
 //
-// Returned:		
+// Returned:			none
 //***************************************************************************
 void Letter::setCost() {
 	mCost = mWeight * COST_PER_OUNCE;
 }
 //***************************************************************************
-// Function:	
+// Function:			addInsurance
 //
-// Description:
+// Description:		Turns the object's insurance status to true, calculates the
+//								cost of insurance, and adds it to the total cost
 //
-// Parameters:	
+// Parameters:		None
 //
-// Returned:		
+// Returned:			The cost of adding insurance
 //***************************************************************************
 double Letter::addInsurance() {
 	double insuranceCost = 0;
@@ -55,13 +54,14 @@ double Letter::addInsurance() {
 	return insuranceCost;
 }
 //***************************************************************************
-// Function:	
+// Function:			addRush
 //
-// Description:
+// Description:		Turns the object's rush status to true, calculates the
+//								cost of rush, and adds it to the total cost
 //
-// Parameters:	
+// Parameters:		None
 //
-// Returned:		
+// Returned:			The cost of adding rush
 //***************************************************************************
 double Letter::addRush() {
 	double rushCost = 0;
@@ -73,13 +73,13 @@ double Letter::addRush() {
 	return rushCost;
 }
 //***************************************************************************
-// Function:	
+// Function:			Read
 //
-// Description:
+// Description:	  Reads in data members from a stream
 //
-// Parameters:	
+// Parameters:		rcIn - determines from which stream the data is read
 //
-// Returned:		
+// Returned:			True if the data is read in, otherwise false
 //***************************************************************************
 bool Letter::read(istream& rcIn) {
 	bool bIsRead = true;
@@ -89,13 +89,14 @@ bool Letter::read(istream& rcIn) {
 	return bIsRead;
 }
 //***************************************************************************
-// Function:	
+// Function:			getDeliveryDay
 //
-// Description:
+// Description:		Calculates the delivery date based on how far away the 
+//								letter is and its rush status
 //
-// Parameters:	
+// Parameters:		none
 //
-// Returned:		
+// Returned:			The number of days until delivery
 //***************************************************************************
 int Letter::getDeliveryDay() {
 	int deliveryDay;
